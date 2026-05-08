@@ -1,13 +1,15 @@
+import bannerVideo from '../assets/vid/VideoBanner.mp4';
+
 export function Hero({ onBooking }) {
   return (
     <section className="hero">
-      <video 
-        className="hero-video-bg" 
-        src="src/assets/vid/VideoBanner.mp4" 
-        autoPlay 
-        loop 
-        muted 
-        playsInline 
+      <video
+        className="hero-video-bg"
+        src={bannerVideo}
+        autoPlay
+        loop
+        muted
+        playsInline
       />
       <div className="hero-grid-bg" />
       <div className="hero-glow" />
