@@ -1,32 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
-
-function useCountUp(target, duration = 1800) {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        observer.disconnect();
-        let start = 0;
-        const step = target / (duration / 16);
-        const timer = setInterval(() => {
-          start += step;
-          if (start >= target) { setCount(target); clearInterval(timer); }
-          else setCount(Math.floor(start));
-        }, 16);
-      }
-    }, { threshold: 0.3 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [target]);
-  return [count, ref];
-}
+import { useGSAP } from '@gsap/react';
+import { animateMetricValue, animateTestimonialsSection } from '../animations/testimonialsAnimations';
 
 function MetricCell({ prefix = '', value, suffix = '', label }) {
-  const [count, ref] = useCountUp(value);
+  const valueRef = useRef(null);
+
+  useGSAP(() => {
+    animateMetricValue(valueRef.current, value);
+  }, { dependencies: [value] });
+
   return (
-    <div className="metric-cell" ref={ref}>
-      <div className="metric-value">{prefix}{count}{suffix}</div>
+    <div className="metric-cell">
+      <div className="metric-value">
+        {prefix}<span ref={valueRef}>0</span>{suffix}
+      </div>
       <div className="metric-label">{label}</div>
     </div>
   );
@@ -48,9 +35,16 @@ const STATIC_TESTIMONIALS = [
 ];
 
 export function Testimonials() {
-  const [carouselRef, setCarouselRef] = useState(null);
+  const sectionRef = useRef(null);
+  const carouselRef = useRef(null);
+  const dragState = useRef({ isDown: false, startX: 0, scrollLeft: 0 });
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  useGSAP(() => {
+    if (loading) return;
+    animateTestimonialsSection(sectionRef.current);
+  }, { scope: sectionRef, dependencies: [loading, testimonials.length] });
 
   useEffect(() => {
     fetch('https://randomuser.me/api/?results=3&inc=name,picture')
@@ -61,49 +55,55 @@ export function Testimonials() {
           name: `${user.name.first} ${user.name.last}`,
           bike: STATIC_TESTIMONIALS[i].bike,
           picture: user.picture.medium,
-          initial: user.name.first.charAt(0)
+          initial: user.name.first.charAt(0),
         }));
         setTestimonials(dynamicTestimonials);
       })
       .catch(() => {
-        // Fallback
-        setTestimonials(STATIC_TESTIMONIALS.map((t, i) => ({ ...t, name: `Piloto ${i+1}`, initial: `P${i+1}` })));
+        setTestimonials(STATIC_TESTIMONIALS.map((t, i) => ({
+          ...t,
+          name: `Piloto ${i + 1}`,
+          initial: `P${i + 1}`,
+        })));
       })
       .finally(() => setLoading(false));
   }, []);
 
-  let isDown = false;
-  let startX;
-  let scrollLeft;
-
   const handleMouseDown = (e) => {
-    if(!carouselRef) return;
-    isDown = true;
-    startX = e.pageX - carouselRef.offsetLeft;
-    scrollLeft = carouselRef.scrollLeft;
+    if (!carouselRef.current) return;
+
+    dragState.current = {
+      isDown: true,
+      startX: e.pageX - carouselRef.current.offsetLeft,
+      scrollLeft: carouselRef.current.scrollLeft,
+    };
   };
-  const handleMouseLeave = () => { isDown = false; };
-  const handleMouseUp = () => { isDown = false; };
+
+  const stopDrag = () => {
+    dragState.current.isDown = false;
+  };
+
   const handleMouseMove = (e) => {
-    if (!isDown || !carouselRef) return;
+    if (!dragState.current.isDown || !carouselRef.current) return;
+
     e.preventDefault();
-    const x = e.pageX - carouselRef.offsetLeft;
-    const walk = (x - startX) * 2;
-    carouselRef.scrollLeft = scrollLeft - walk;
+    const x = e.pageX - carouselRef.current.offsetLeft;
+    const walk = (x - dragState.current.startX) * 2;
+    carouselRef.current.scrollLeft = dragState.current.scrollLeft - walk;
   };
 
   return (
-    <section className="section testimonials-section">
+    <section className="section testimonials-section" ref={sectionRef}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-        <div className="section-label reveal">// Lo que dicen nuestros pilotos</div>
-        <h2 className="section-title reveal">PRUEBA SOCIAL: <em>TESTIMONIOS DEL PADDOCK</em></h2>
-        <div className="divider-line reveal" />
-        <div 
-          className="carousel-container reveal-stagger"
-          ref={setCarouselRef}
+        <div className="section-label testimonials-kicker">// Lo que dicen nuestros pilotos</div>
+        <h2 className="section-title testimonials-title"><em>TESTIMONIOS DEL PADDOCK</em></h2>
+        <div className="divider-line testimonials-divider" />
+        <div
+          className="carousel-container"
+          ref={carouselRef}
           onMouseDown={handleMouseDown}
-          onMouseLeave={handleMouseLeave}
-          onMouseUp={handleMouseUp}
+          onMouseLeave={stopDrag}
+          onMouseUp={stopDrag}
           onMouseMove={handleMouseMove}
         >
           {loading ? (
@@ -145,11 +145,11 @@ function MetricsRow() {
         const total = data.MRData.total || data.MRData.RaceTable.Races.length;
         setF1Races(parseInt(total, 10));
       })
-      .catch(e => console.error("F1 API Error:", e));
+      .catch(e => console.error('F1 API Error:', e));
   }, []);
 
   return (
-    <div className="metrics-row reveal-stagger">
+    <div className="metrics-row">
       <MetricCell prefix="+" value={f1Races} label="Mapeos completados" />
       <MetricCell value={15} suffix=" Años" label="De experiencia técnica" />
       <MetricCell prefix="+" value={300} label="Velocidad Max km/h" />
