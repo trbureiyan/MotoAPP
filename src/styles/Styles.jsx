@@ -488,11 +488,19 @@ export const Styles = () => (
     }
 
     /* GALLERY */
+    .gallery-featured {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
     .gallery-masonry {
       columns: 3;
       column-gap: 1rem;
     }
-    @media (max-width: 768px) { .gallery-masonry { columns: 2; } }
+    @media (max-width: 768px) {
+      .gallery-featured { grid-template-columns: 1fr; }
+      .gallery-masonry { columns: 2; }
+    }
     @media (max-width: 480px) { .gallery-masonry { columns: 1; } }
     .gallery-item {
       break-inside: avoid;
@@ -500,12 +508,29 @@ export const Styles = () => (
       position: relative;
       overflow: hidden;
       cursor: pointer;
+      display: block;
+      width: 100%;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      color: inherit;
+      text-align: left;
     }
     .gallery-item img {
       width: 100%;
+      aspect-ratio: 4 / 5;
       display: block;
+      object-fit: cover;
       transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       filter: grayscale(20%);
+    }
+    .gallery-featured .gallery-item {
+      margin-bottom: 0;
+      min-height: 360px;
+    }
+    .gallery-featured .gallery-item img {
+      height: 100%;
+      min-height: 360px;
     }
     .gallery-item:hover img { transform: scale(1.06); filter: grayscale(0%); }
     .gallery-item-overlay {
@@ -525,6 +550,29 @@ export const Styles = () => (
       color: ${T.orange};
       letter-spacing: 0.12em;
       text-transform: uppercase;
+    }
+    .gallery-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    .gallery-page {
+      min-height: 70vh;
+      background: ${T.bg2};
+    }
+    .gallery-page .gallery-item {
+      transform-style: preserve-3d;
+      will-change: transform, opacity;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+    }
+    .gallery-page .gallery-item img {
+      will-change: transform, filter;
+    }
+    .gallery-page .gallery-item:hover img {
+      transform: none;
+    }
+    .gallery-back-btn {
+      margin-bottom: 2rem;
     }
 
     /* LIGHTBOX */

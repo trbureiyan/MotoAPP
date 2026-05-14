@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { BookingModal } from './components/BookingModal';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
-import { Gallery } from './components/Gallery';
+import { Gallery, GalleryPage } from './components/Gallery';
 import { Hero } from './components/Hero';
 import { Navbar } from './components/Navbar';
 import { Servicios } from './components/Servicios';
@@ -11,6 +11,7 @@ import { Styles } from './styles/Styles';
 
 export function App() {
   const [showModal, setShowModal] = useState(false);
+  const [activeView, setActiveView] = useState('home');
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -27,17 +28,33 @@ export function App() {
     return () => {
       hiddenElements.forEach((el) => observer.unobserve(el));
     };
-  }, []);
+  }, [activeView]);
+
+  const showGalleryPage = () => {
+    setActiveView('gallery');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const showHome = () => {
+    setActiveView('home');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div>
       <Styles />
       <Navbar onBooking={() => setShowModal(true)} />
-      <Hero onBooking={() => setShowModal(true)} />
-      <Servicios />
-      <Testimonials />
-      <Gallery />
-      <Contact />
+      {activeView === 'gallery' ? (
+        <GalleryPage onBack={showHome} />
+      ) : (
+        <>
+          <Hero onBooking={() => setShowModal(true)} />
+          <Servicios />
+          <Testimonials />
+          <Gallery onViewMore={showGalleryPage} />
+          <Contact />
+        </>
+      )}
       <Footer />
       {showModal && <BookingModal onClose={() => setShowModal(false)} />}
     </div>
