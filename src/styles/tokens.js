@@ -10,5 +10,6 @@ export const T = {
   text: '#e8e8e8',
   muted: '#888',
   mono: "'Roboto Mono', monospace",
-  head: "'Montserrat', sans-serif",
+  body: "'Inter', sans-serif",
+  head: "'Space Grotesk', sans-serif",
 };

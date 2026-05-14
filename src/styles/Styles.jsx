@@ -248,20 +248,56 @@ export const Styles = () => (
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
       border: 1px solid ${T.border};
+      width: 100%;
+      height: 100%;
     }
     .flip-front {
       background: ${T.bg2};
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
       gap: 1.25rem;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      background-color: transparent;
+    }
+    .flip-front-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.92) saturate(1.05);
+      z-index: 0;
+    }
+    .flip-front::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(14,14,14,0.05), rgba(14,14,14,0.7));
+      pointer-events: none;
+      z-index: 1;
+    }
+    .flip-front-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 1rem;
+      width: 100%;
+      padding: 1.5rem;
+      min-height: 100%;
+      text-align: center;
     }
     .flip-front-icon {
       width: 64px;
       height: 64px;
       border-radius: 50%;
-      background: ${T.orangeGlow};
+      background: rgba(0,0,0,0.45);
       border: 1px solid rgba(255,98,0,0.3);
       display: flex;
       align-items: center;
@@ -273,17 +309,18 @@ export const Styles = () => (
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.12em;
+      color: #fff;
     }
     .flip-front-hint {
       font-family: ${T.mono};
       font-size: 0.65rem;
-      color: ${T.muted};
+      color: rgba(255,255,255,0.75);
       letter-spacing: 0.1em;
     }
     .flip-back {
       background: ${T.bg3};
       transform: rotateY(180deg);
-      padding: 2rem;
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -348,21 +385,22 @@ export const Styles = () => (
       scrollbar-width: none; /* Firefox */
       display: flex;
       gap: 1.5rem;
-      padding-bottom: 2rem;
+      padding: 1rem 0 2rem;
+      scroll-behavior: smooth;
       cursor: grab;
     }
     .carousel-container::-webkit-scrollbar { display: none; }
     .carousel-container:active { cursor: grabbing; }
     
     .carousel-item {
-      min-width: 320px;
-      max-width: 400px;
+      min-width: 360px;
+      max-width: 420px;
       flex: 0 0 auto;
       scroll-snap-align: start;
     }
     
     .bento-card {
-      background: rgba(26,26,26, 0.6);
+      background: rgba(26,26,26, 0.75);
       backdrop-filter: blur(8px);
       border: 1px solid rgba(255,255,255,0.05);
       border-radius: 8px;

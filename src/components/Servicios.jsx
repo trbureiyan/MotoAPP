@@ -6,6 +6,7 @@ const SERVICES = [
     icon: <IconWrench />,
     title: 'Mantenimiento',
     hint: '// preventive & corrective',
+    image: 'https://images.unsplash.com/photo-1636761358757-0a616eb9e17e?q=80&w=1170&auto=format&fit=crop&w=900&q=80',
     specs: [
       ['Intervalo', '5,000 km'],
       ['Aceite', 'Sintético 10W-40'],
@@ -19,6 +20,7 @@ const SERVICES = [
     icon: <IconGauge />,
     title: 'Tuning',
     hint: '// performance mapping',
+    image: 'https://images.unsplash.com/photo-1531327431456-837da4b1d562?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     specs: [
       ['ECU', 'Remap avanzado'],
       ['Potencia', '+15–25% torque'],
@@ -32,6 +34,7 @@ const SERVICES = [
     icon: <IconDisc />,
     title: 'Frenos',
     hint: '// brake engineering',
+    image: 'https://images.unsplash.com/photo-1769673459571-48f3e3fb5c89?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     specs: [
       ['Pastillas', 'Ferodo / Brembo'],
       ['Discos', 'Flotantes / sólidos'],
@@ -49,9 +52,14 @@ function FlipCard({ service }) {
     <div className={`flip-card${flipped ? ' flipped' : ''}`} onClick={() => setFlipped(f => !f)}>
       <div className="flip-card-inner">
         <div className="flip-front">
-          <div className="flip-front-icon">{service.icon}</div>
-          <div className="flip-front-title">{service.title}</div>
-          <div className="flip-front-hint">{service.hint}</div>
+          {service.image && (
+            <img className="flip-front-img" src={service.image} alt={service.title} />
+          )}
+          <div className="flip-front-content">
+            <div className="flip-front-icon">{service.icon}</div>
+            <div className="flip-front-title">{service.title}</div>
+            <div className="flip-front-hint">{service.hint}</div>
+          </div>
         </div>
         <div className="flip-back">
           <div>
