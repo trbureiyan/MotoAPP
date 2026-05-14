@@ -2,7 +2,7 @@ import { T } from './tokens';
 
 export const Styles = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Roboto+Mono:wght@400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap');
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -11,7 +11,7 @@ export const Styles = () => (
     body {
       background: ${T.bg0};
       color: ${T.text};
-      font-family: ${T.head};
+      font-family: ${T.body};
       overflow-x: hidden;
     }
 
