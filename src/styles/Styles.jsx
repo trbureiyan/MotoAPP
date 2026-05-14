@@ -91,6 +91,136 @@ export const Styles = () => (
     }
     .btn-outline:hover { background: ${T.orangeGlow}; }
 
+    /* MOBILE NAV */
+    .nav-mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: ${T.text};
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .nav-mobile-menu {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: rgba(14,14,14,0.95);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 1rem 2rem;
+      transform: translateY(-100%);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 998;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .nav-mobile-menu.open {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+    .nav-mobile-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      list-style: none;
+      width: 100%;
+      align-items: center;
+    }
+    .nav-mobile-links a {
+      font-family: ${T.head};
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: ${T.muted};
+      text-decoration: none;
+      padding: 0.75rem 0;
+      transition: color 0.2s;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      width: fit-content;
+      text-align: center;
+    }
+    .nav-mobile-links a:hover { color: ${T.text}; }
+    .nav-mobile-cta {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      width: 100%;
+    }
+    .nav-mobile-cta .btn-orange {
+      width: 100%;
+      max-width: 260px;
+    }
+
+    /* RESPONSIVE BREAKPOINTS */
+    @media (max-width: 768px) {
+      .nav-root { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .nav-mobile-toggle { display: block; }
+      .nav-desktop-cta { display: none; }
+      
+      .hero { min-height: 85vh; padding: 4rem 1rem 3rem; }
+      .hero-inner { max-width: 100%; text-align: center; }
+      .hero-label { font-size: 0.65rem; }
+      .hero-h1 { font-size: clamp(2.5rem, 12vw, 6rem); }
+      .hero-sub { font-size: 1rem; max-width: 100%; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .hero-stat-row { 
+        position: static; 
+        margin-top: 2rem;
+        display: flex; 
+        justify-content: center;
+        gap: 2rem; 
+      }
+      .hero-stat-item { text-align: center; }
+      
+      .section { padding: 4rem 1rem; }
+      .section-title { font-size: clamp(1.8rem, 6vw, 2.8rem); }
+      
+      .flip-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .flip-card { height: 320px; }
+      
+      .carousel-container { gap: 1rem; padding: 0.5rem 0 2rem; }
+      .carousel-item { min-width: 280px; max-width: 320px; }
+      
+      .bento-card { padding: 2rem 1.5rem; }
+      .bento-quote { font-size: 0.95rem; margin-bottom: 1.5rem; }
+      .bento-avatar { width: 44px; height: 44px; }
+      .bento-name { font-size: 0.85rem; }
+      .bento-sub { font-size: 0.65rem; }
+      
+      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      
+      .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-root { height: 56px; padding: 0 0.75rem; }
+      .nav-logo { font-size: 1.1rem; }
+      .nav-mobile-menu { top: 56px; padding: 0.75rem 1rem; }
+      
+      .hero { min-height: 80vh; padding: 3rem 1rem 2rem; }
+      .hero-h1 { font-size: clamp(2rem, 14vw, 5rem); }
+      .hero-stat-row { gap: 1.5rem; }
+      
+      .section { padding: 3rem 1rem; }
+      
+      .flip-card { height: 280px; }
+      
+      .carousel-item { min-width: 260px; max-width: 300px; }
+      
+      .modal-box { padding: 1.5rem; max-width: 95vw; }
+      .brand-grid { grid-template-columns: 1fr; }
+    }
+
     /* HERO */
     .hero {
       position: relative;
@@ -385,12 +515,39 @@ export const Styles = () => (
       scrollbar-width: none; /* Firefox */
       display: flex;
       gap: 1.5rem;
-      padding: 1rem 0 2rem;
+      padding: 1rem 0 3rem;
       scroll-behavior: smooth;
       cursor: grab;
+      position: relative;
     }
     .carousel-container::-webkit-scrollbar { display: none; }
     .carousel-container:active { cursor: grabbing; }
+    
+    .carousel-indicators {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      padding: 1rem 0;
+    }
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .carousel-dot.active {
+      background: ${T.orange};
+      transform: scale(1.2);
+    }
+    .carousel-dot:hover {
+      background: rgba(255,98,0,0.7);
+    }
     
     .carousel-item {
       min-width: 360px;
@@ -400,62 +557,94 @@ export const Styles = () => (
     }
     
     .bento-card {
-      background: rgba(26,26,26, 0.75);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 8px;
-      padding: 2rem;
+      background: rgba(26,26,26, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,98,0,0.08);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
       position: relative;
       overflow: hidden;
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.3s, box-shadow 0.3s;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     }
     .bento-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 60px rgba(255,98,0,0.15);
+      border-color: rgba(255,98,0,0.2);
     }
     .bento-card::before {
       content: '"';
       position: absolute;
-      top: -0.5rem;
-      left: 1.25rem;
-      font-size: 6rem;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 4rem;
       color: ${T.orange};
-      opacity: 0.1;
+      opacity: 0.08;
       font-family: Georgia, serif;
       line-height: 1;
+      transform: rotate(180deg);
+    }
+    .bento-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, ${T.orange}, ${T.orangeDim});
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .bento-card:hover::after {
+      opacity: 1;
     }
     .bento-quote {
-      font-size: 0.9rem;
-      line-height: 1.75;
+      font-size: 1rem;
+      line-height: 1.8;
       color: ${T.text};
-      margin-bottom: 1.25rem;
+      margin-bottom: 2rem;
+      font-style: italic;
+      position: relative;
+      z-index: 1;
     }
     .bento-rider {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
     }
     .bento-avatar {
-      width: 36px;
-      height: 36px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       background: linear-gradient(135deg, ${T.orange}, ${T.orangeDim});
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 1rem;
       color: #000;
+      border: 2px solid rgba(255,98,0,0.2);
+      box-shadow: 0 4px 12px rgba(255,98,0,0.3);
     }
-    .bento-name { font-weight: 700; font-size: 0.82rem; }
+    .bento-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: ${T.text};
+      margin-bottom: 0.25rem;
+    }
     .bento-sub {
       font-family: ${T.mono};
-      font-size: 0.65rem;
+      font-size: 0.7rem;
       color: ${T.muted};
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     /* METRICS */
@@ -1033,6 +1222,7 @@ export const Styles = () => (
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slideUp { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
     .cursor-blink {
       display: inline-block;
