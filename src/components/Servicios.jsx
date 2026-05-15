@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { IconDisc, IconGauge, IconWrench } from './Icons';
 
 const SERVICES = [
@@ -48,9 +50,49 @@ const SERVICES = [
 
 function FlipCard({ service }) {
   const [flipped, setFlipped] = useState(false);
+  const cardRef = useRef();
+  const innerRef = useRef();
+  
+  const { contextSafe } = useGSAP({ scope: cardRef });
+
+  const handleFlip = contextSafe(() => {
+    const nextFlipped = !flipped;
+    setFlipped(nextFlipped);
+    
+    gsap.to(innerRef.current, {
+      rotationY: nextFlipped ? 180 : 0,
+      duration: 0.8,
+      ease: 'back.out(1.2)'
+    });
+  });
+
+  const handleMouseEnter = contextSafe(() => {
+    if (!flipped) {
+      gsap.to(cardRef.current.querySelector('.flip-front-img'), {
+        scale: 1.1,
+        duration: 0.8,
+        ease: 'power3.out'
+      });
+    }
+  });
+
+  const handleMouseLeave = contextSafe(() => {
+    gsap.to(cardRef.current.querySelector('.flip-front-img'), {
+      scale: 1,
+      duration: 0.8,
+      ease: 'power3.out'
+    });
+  });
+
   return (
-    <div className={`flip-card${flipped ? ' flipped' : ''}`} onClick={() => setFlipped(f => !f)}>
-      <div className="flip-card-inner">
+    <div 
+      className="flip-card" 
+      onClick={handleFlip}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      ref={cardRef}
+    >
+      <div className="flip-card-inner" ref={innerRef}>
         <div className="flip-front">
           {service.image && (
             <img className="flip-front-img" src={service.image} alt={service.title} />
