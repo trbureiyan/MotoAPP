@@ -45,16 +45,20 @@ export function Hero({ onBooking }) {
       <div className="hero-glow" />
 
       <div className="hero-inner">
-        <div className="hero-label">Neiva, Huila - Colombia</div>
+        <div className="hero-label">
+          <span className="hero-location">Neiva, Huila</span>
+          <span className="hero-sep">/</span>
+          <span className="hero-tag">Taller especializado</span>
+        </div>
         <h1 className="hero-h1">
           Moto.<span>Taller</span>
         </h1>
         <p className="hero-sub">
-          Ingeniería de alto cilindraje para verdaderos entusiastas. Telemetría avanzada y tuning de élite en el corazón del sur de Colombia.
+          Servicio especializado para motos de alto cilindraje, diagnostico claro y entrega confiable en Neiva.
         </p>
         <div className="hero-actions">
-          <button className="btn-orange" onClick={onBooking}>AGENDAR SERVICIO</button>
-          <a href="#taller"><button className="btn-outline">VER ESPECIFICACIONES</button></a>
+          <button className="btn-orange" onClick={onBooking}>AGENDAR CITA</button>
+          <a href="#servicios"><button className="btn-outline">VER SERVICIOS</button></a>
         </div>
       </div>
       <div className="hero-stat-row">

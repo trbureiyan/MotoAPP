@@ -39,22 +39,23 @@ export const heroStyles = (T) => `
     }
     .hero-inner { position: relative; max-width: 900px; }
     .hero-label {
+      font-family: ${T.body};
+      font-size: 0.85rem;
+      color: ${T.text};
+      letter-spacing: 0.02em;
+      margin-bottom: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .hero-location { font-weight: 600; }
+    .hero-sep { color: ${T.orange}; opacity: 0.9; }
+    .hero-tag {
       font-family: ${T.mono};
       font-size: 0.72rem;
-      color: ${T.orange};
-      letter-spacing: 0.2em;
+      color: ${T.muted};
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .hero-label::before {
-      content: '';
-      display: block;
-      width: 32px;
-      height: 1px;
-      background: ${T.orange};
     }
     .hero-h1 {
       font-family: ${T.head};
