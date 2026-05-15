@@ -7,7 +7,7 @@ const SERVICES = [
   {
     icon: <IconWrench />,
     title: 'Mantenimiento',
-    hint: '// preventive & corrective',
+    hint: 'Preventivo y correctivo',
     image: 'https://images.unsplash.com/photo-1636761358757-0a616eb9e17e?q=80&w=1170&auto=format&fit=crop&w=900&q=80',
     specs: [
       ['Intervalo', '5,000 km'],
@@ -21,7 +21,7 @@ const SERVICES = [
   {
     icon: <IconGauge />,
     title: 'Tuning',
-    hint: '// performance mapping',
+    hint: 'Mapeo de rendimiento',
     image: 'https://images.unsplash.com/photo-1531327431456-837da4b1d562?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     specs: [
       ['ECU', 'Remap avanzado'],
@@ -35,7 +35,7 @@ const SERVICES = [
   {
     icon: <IconDisc />,
     title: 'Frenos',
-    hint: '// brake engineering',
+    hint: 'Ingenieria de frenos',
     image: 'https://images.unsplash.com/photo-1769673459571-48f3e3fb5c89?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     specs: [
       ['Pastillas', 'Ferodo / Brembo'],
@@ -104,15 +104,19 @@ function FlipCard({ service }) {
           </div>
         </div>
         <div className="flip-back">
-          <div>
-            <div className="flip-back-title">ESPECIFICACIONES // {service.title.toUpperCase()}</div>
-            <div className="flip-back-specs">
-              {service.specs.map(([k, v]) => (
-                <div key={k}>{k}: <span>{v}</span></div>
-              ))}
-            </div>
+          <div className="flip-back-header">
+            <div className="flip-back-title">Especificaciones de servicio</div>
+            <div className="flip-back-name">{service.title}</div>
           </div>
-          <div className="flip-back-price">Base: {service.base}</div>
+          <ul className="flip-back-specs">
+            {service.specs.map(([k, v]) => (
+              <li key={k}>
+                <span className="flip-back-key">{k}</span>
+                <span className="flip-back-val">{v}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="flip-back-price">Desde {service.base}</div>
         </div>
       </div>
     </div>
@@ -123,10 +127,10 @@ export function Servicios() {
   return (
     <section className="section services-section" id="servicios">
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-        <div className="section-label reveal">// Capacidades del taller</div>
+        <div className="section-label reveal">Servicios principales del taller</div>
         <h2 className="section-title reveal">NUESTROS <em>SERVICIOS</em></h2>
         <div className="divider-line reveal" />
-        <p className="section-sub reveal">Precisión mecánica y telemetría avanzada. Explorando los límites del rendimiento en el corazón de Neiva.</p>
+        <p className="section-sub reveal">Precision mecanica y telemetria avanzada para cuidar y potenciar tu moto en Neiva.</p>
         <div className="flip-grid reveal-stagger">
           {SERVICES.map(s => <FlipCard key={s.title} service={s} />)}
         </div>

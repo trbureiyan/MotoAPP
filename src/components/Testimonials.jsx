@@ -93,7 +93,7 @@ export function Testimonials() {
   return (
     <section className="section testimonials-section" ref={sectionRef}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-        <div className="section-label testimonials-kicker">// Lo que dicen nuestros pilotos</div>
+        <div className="section-label testimonials-kicker">Opiniones reales de clientes</div>
         <h2 className="section-title testimonials-title"><em>TESTIMONIOS DEL PADDOCK</em></h2>
         <div className="divider-line testimonials-divider" />
         <div

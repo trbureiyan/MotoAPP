@@ -64,13 +64,13 @@ export function Gallery({ onViewMore }) {
   return (
     <section className="section gallery-section" id="taller">
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div className="section-label reveal">// Proyectos recientes</div>
+        <div className="section-label reveal">Trabajos recientes del taller</div>
         <h2 className="section-title reveal">
           EL <em>TALLER</em>
         </h2>
         <div className="divider-line reveal" />
         <p className="section-sub reveal">
-          Cada moto que entra al paddock recibe atención de nivel competitivo.
+          Cada moto que entra al paddock recibe atencion de nivel competitivo y un reporte claro del trabajo.
         </p>
         <GalleryGrid
           items={featuredItems}
@@ -218,7 +218,7 @@ export function GalleryPage({ onBack }) {
           VOLVER AL INICIO
         </button>
         <div className="hs-header">
-          <div className="section-label">// Archivo completo</div>
+          <div className="section-label">Archivo completo del taller</div>
         </div>
       </div>
 

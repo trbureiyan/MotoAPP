@@ -5,25 +5,25 @@ import { T } from '../styles/tokens';
 const CHAT_STEPS = [
   {
     key: 'name',
-    prompt: 'CONEXIÓN INICIADA. Para comenzar, ¿cuál es tu nombre, piloto?',
+    prompt: 'Bienvenido a MOTO.TALLER. Para agendar tu cita, ¿como te llamas?',
     placeholder: 'Tu nombre...',
     options: null,
   },
   {
     key: 'service',
-    prompt: 'Bienvenido al sistema MOTO.TALLER. Selecciona el servicio requerido:',
+    prompt: 'Perfecto. ¿Que servicio necesitas hoy?',
     placeholder: 'O escribe tu servicio...',
     options: ['MANTENIMIENTO', 'TUNING ECU', 'SISTEMA DE FRENOS', 'DIAGNÓSTICO'],
   },
   {
     key: 'issue',
-    prompt: 'Describe brevemente el problema o requerimiento de tu moto:',
+    prompt: 'Cuéntanos brevemente lo que necesitas revisar en tu moto:',
     placeholder: 'Detalla el síntoma o trabajo...',
     options: null,
   },
   {
     key: 'contact',
-    prompt: 'Casi listo. ¿Cuál es tu número o email para confirmar la cita?',
+    prompt: 'Ya casi terminamos. ¿Cual es tu numero o email para confirmar?',
     placeholder: 'Teléfono o email...',
     options: null,
   },
@@ -32,7 +32,7 @@ const CHAT_STEPS = [
 function TerminalChat() {
   const [step, setStep] = useState(0);
   const [messages, setMessages] = useState([
-    { type: 'system', text: 'MOTO.TALLER TELE-METRÍA v1.0.1 - Sistema activo' },
+    { type: 'system', text: 'MOTO.TALLER - Chat de servicio en linea' },
     { type: 'system', text: CHAT_STEPS[0].prompt },
   ]);
   const [inputVal, setInputVal] = useState('');
@@ -64,7 +64,7 @@ function TerminalChat() {
       setMessages(newMessages);
       setInputVal('');
     } else {
-      newMessages.push({ type: 'system', text: `Enviando...` });
+      newMessages.push({ type: 'system', text: 'Enviando tu solicitud...' });
       setMessages(newMessages);
       setInputVal('');
 
@@ -81,10 +81,10 @@ function TerminalChat() {
       .then(res => {
         if (res.status === 201) {
           if (window.UIkit) {
-            window.UIkit.notification({message: 'Transmisión exitosa. Ticket #1024', status: 'success'});
+            window.UIkit.notification({message: 'Solicitud recibida. Ticket #1024', status: 'success'});
           }
           setMessages([
-            { type: 'system', text: 'MOTO.TALLER TELE-METRÍA v1.0.1 - Sistema activo' },
+            { type: 'system', text: 'MOTO.TALLER - Chat de servicio en linea' },
             { type: 'system', text: CHAT_STEPS[0].prompt }
           ]);
           setStep(0);
@@ -107,7 +107,7 @@ function TerminalChat() {
         <div className="terminal-dot" style={{ background: '#ff5f57' }} />
         <div className="terminal-dot" style={{ background: '#febc2e' }} />
         <div className="terminal-dot" style={{ background: '#28c840' }} />
-        <div className="terminal-title">MOTO.TALLER.TELEMETRÍA - CANAL SEGURO</div>
+        <div className="terminal-title">MOTO.TALLER - Atencion en linea</div>
       </div>
       <div className="terminal-progress-bar">
         <div className="terminal-progress-fill" style={{ width: `${progress}%` }} />
@@ -203,7 +203,7 @@ export function Contact() {
   return (
     <section className="section contact-section" id="contacto">
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-        <div className="section-label reveal">// Canal de comunicación directa</div>
+        <div className="section-label reveal">Canal directo con el taller</div>
         <h2 className="section-title reveal">INICIA EL <em>SEGUIMIENTO</em></h2>
         <div className="divider-line reveal" />
         <p className="section-sub reveal">Ponte en contacto con nuestro equipo de ingenieros para programar tu servicio o consultar sobre preparaciones específicas de alto rendimiento.</p>
