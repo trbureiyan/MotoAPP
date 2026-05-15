@@ -67,3 +67,7 @@ Desktop.ini
 *.swp
 *.bak
 *.tmp
+
+# IA
+.agent
+agents/

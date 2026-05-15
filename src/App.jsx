@@ -1,4 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
 import { BookingModal } from './components/BookingModal';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
@@ -7,28 +11,55 @@ import { Hero } from './components/Hero';
 import { Navbar } from './components/Navbar';
 import { Servicios } from './components/Servicios';
 import { Testimonials } from './components/Testimonials';
+import { Preloader } from './components/Preloader';
+import { SoftCursor } from './components/SoftCursor';
 import { Styles } from './styles/Styles';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function App() {
   const [showModal, setShowModal] = useState(false);
   const [activeView, setActiveView] = useState('home');
+  const appRef = useRef();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
+  useGSAP(() => {
+    // Reveal simple
+    gsap.utils.toArray('.reveal').forEach((el) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
         }
-      });
-    }, { threshold: 0.1 });
+      );
+    });
 
-    const hiddenElements = document.querySelectorAll('.reveal, .reveal-stagger');
-    hiddenElements.forEach((el) => observer.observe(el));
-
-    return () => {
-      hiddenElements.forEach((el) => observer.unobserve(el));
-    };
-  }, [activeView]);
+    // Reveal stagger
+    gsap.utils.toArray('.reveal-stagger').forEach((container) => {
+      gsap.fromTo(container.children,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.15,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: container,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+    });
+  }, { scope: appRef, dependencies: [activeView] });
 
   const showGalleryPage = () => {
     setActiveView('gallery');
@@ -41,7 +72,9 @@ export function App() {
   };
 
   return (
-    <div>
+    <div ref={appRef}>
+      <Preloader />
+      <SoftCursor />
       <Styles />
       <Navbar onBooking={() => setShowModal(true)} />
       {activeView === 'gallery' ? (
@@ -53,9 +86,9 @@ export function App() {
           <Testimonials />
           <Gallery onViewMore={showGalleryPage} />
           <Contact />
+          <Footer />
         </>
       )}
-      <Footer />
       {showModal && <BookingModal onClose={() => setShowModal(false)} />}
     </div>
   );

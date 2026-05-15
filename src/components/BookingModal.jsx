@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { IconX } from './Icons';
 import { T } from '../styles/tokens';
 
@@ -10,6 +12,18 @@ export function BookingModal({ onClose }) {
   const [data, setData] = useState({ brand: '', motivo: '', fecha: '', nombre: '', telefono: '', modelo: '' });
   const [brands, setBrands] = useState([]);
   const [loadingBrands, setLoadingBrands] = useState(false);
+  const modalRef = useRef();
+
+  useGSAP(() => {
+    gsap.from('.modal-overlay', { opacity: 0, duration: 0.4, ease: 'power2.out' });
+    gsap.from('.modal-box', { 
+      y: 50, 
+      opacity: 0, 
+      duration: 0.6, 
+      ease: 'back.out(1.5)',
+      delay: 0.1
+    });
+  }, { scope: modalRef });
 
   useEffect(() => {
     setLoadingBrands(true);
@@ -48,7 +62,7 @@ export function BookingModal({ onClose }) {
   const [done, setDone] = useState(false);
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay" onClick={onClose} ref={modalRef}>
       <div className="modal-box" onClick={e => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}><IconX /></button>
 

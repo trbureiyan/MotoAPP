@@ -142,6 +142,8 @@ function TerminalChat() {
 }
 
 function WorkshopInfo() {
+  const [showRadar, setShowRadar] = useState(false);
+
   return (
     <div>
       <div className="info-block">
@@ -173,11 +175,25 @@ function WorkshopInfo() {
           <button className="contact-btn whatsapp">WhatsApp Directo</button>
           <button className="contact-btn email">Email Soporte</button>
         </div>
-        <div className="map-placeholder reveal">
-          <div style={{ color: T.orange }}><IconRadar /></div>
-          <div className="map-placeholder-label">Activar Radar de Ubicación</div>
-          <div style={{ fontFamily: T.mono, fontSize: '0.62rem', color: T.muted }}>2.927° N, 75.282° W</div>
-        </div>
+        {showRadar ? (
+          <div className="map-placeholder reveal" style={{ padding: 0, overflow: 'hidden' }}>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15933.155!2d-75.282!3d2.927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sco!4v1700000000000!5m2!1sen!2sco"
+              width="100%"
+              height="100%"
+              style={{ border: 0, filter: 'grayscale(1) contrast(1.2) brightness(0.8)' }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        ) : (
+          <div className="map-placeholder reveal" onClick={() => setShowRadar(true)} style={{ cursor: 'pointer', transition: 'background 0.2s' }} onMouseOver={e => e.currentTarget.style.background = T.bg2} onMouseOut={e => e.currentTarget.style.background = T.bg3}>
+            <div style={{ color: T.orange }}><IconRadar /></div>
+            <div className="map-placeholder-label">Activar Radar de Ubicación</div>
+            <div style={{ fontFamily: T.mono, fontSize: '0.62rem', color: T.muted }}>2.927° N, 75.282° W</div>
+          </div>
+        )}
       </div>
     </div>
   );

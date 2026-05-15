@@ -42,8 +42,27 @@ export function Testimonials() {
   const [loading, setLoading] = useState(true);
 
   useGSAP(() => {
-    if (loading) return;
+    if (loading || testimonials.length === 0) return;
     animateTestimonialsSection(sectionRef.current);
+
+    const wrap = carouselRef.current;
+    if (wrap) {
+      const scrollDist = wrap.scrollWidth - window.innerWidth;
+      if (scrollDist > 0) {
+        gsap.to(wrap, {
+          x: () => -scrollDist,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'center center',
+            end: () => `+=${scrollDist}`,
+            scrub: true,
+            pin: true,
+            anticipatePin: 1
+          }
+        });
+      }
+    }
   }, { scope: sectionRef, dependencies: [loading, testimonials.length] });
 
   useEffect(() => {
@@ -69,28 +88,7 @@ export function Testimonials() {
       .finally(() => setLoading(false));
   }, []);
 
-  const handleMouseDown = (e) => {
-    if (!carouselRef.current) return;
-
-    dragState.current = {
-      isDown: true,
-      startX: e.pageX - carouselRef.current.offsetLeft,
-      scrollLeft: carouselRef.current.scrollLeft,
-    };
-  };
-
-  const stopDrag = () => {
-    dragState.current.isDown = false;
-  };
-
-  const handleMouseMove = (e) => {
-    if (!dragState.current.isDown || !carouselRef.current) return;
-
-    e.preventDefault();
-    const x = e.pageX - carouselRef.current.offsetLeft;
-    const walk = (x - dragState.current.startX) * 2;
-    carouselRef.current.scrollLeft = dragState.current.scrollLeft - walk;
-  };
+  // Drag logic removed in favor of GSAP ScrollTrigger horizontal scroll
 
   return (
     <section className="section testimonials-section" ref={sectionRef}>
@@ -99,12 +97,9 @@ export function Testimonials() {
         <h2 className="section-title testimonials-title"><em>TESTIMONIOS DEL PADDOCK</em></h2>
         <div className="divider-line testimonials-divider" />
         <div
-          className="carousel-container"
+          className="carousel-container pin-wrap"
           ref={carouselRef}
-          onMouseDown={handleMouseDown}
-          onMouseLeave={stopDrag}
-          onMouseUp={stopDrag}
-          onMouseMove={handleMouseMove}
+          style={{ overflow: 'visible', display: 'flex', flexWrap: 'nowrap', width: 'max-content' }}
         >
           {loading ? (
             <div style={{ textAlign: 'center', width: '100%', padding: '2rem 0' }} uk-spinner="ratio: 1.5"></div>
