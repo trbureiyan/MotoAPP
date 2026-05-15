@@ -130,7 +130,7 @@ function TerminalChat() {
           <input
             className="terminal-input"
             value={inputVal}
-            onInput={e => setInputVal(e.target.value)}
+            onChange={e => setInputVal(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && send()}
             placeholder={CHAT_STEPS[step].placeholder}
           />
@@ -179,6 +179,7 @@ function WorkshopInfo() {
           <div className="map-placeholder reveal" style={{ padding: 0, overflow: 'hidden' }}>
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15933.155!2d-75.282!3d2.927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sco!4v1700000000000!5m2!1sen!2sco"
+              title="Mapa del taller"
               width="100%"
               height="100%"
               style={{ border: 0, filter: 'grayscale(1) contrast(1.2) brightness(0.8)' }}
@@ -188,7 +189,22 @@ function WorkshopInfo() {
             ></iframe>
           </div>
         ) : (
-          <div className="map-placeholder reveal" onClick={() => setShowRadar(true)} style={{ cursor: 'pointer', transition: 'background 0.2s' }} onMouseOver={e => e.currentTarget.style.background = T.bg2} onMouseOut={e => e.currentTarget.style.background = T.bg3}>
+          <div
+            className="map-placeholder reveal"
+            role="button"
+            tabIndex={0}
+            aria-label="Activar radar de ubicacion"
+            onClick={() => setShowRadar(true)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setShowRadar(true);
+              }
+            }}
+            style={{ cursor: 'pointer', transition: 'background 0.2s' }}
+            onMouseOver={e => e.currentTarget.style.background = T.bg2}
+            onMouseOut={e => e.currentTarget.style.background = T.bg3}
+          >
             <div style={{ color: T.orange }}><IconRadar /></div>
             <div className="map-placeholder-label">Activar Radar de Ubicación</div>
             <div style={{ fontFamily: T.mono, fontSize: '0.62rem', color: T.muted }}>2.927° N, 75.282° W</div>

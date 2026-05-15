@@ -23,6 +23,10 @@ export const navStyles = (T) => `
       color: ${T.orange};
       text-decoration: none;
       text-transform: uppercase;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
     }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {

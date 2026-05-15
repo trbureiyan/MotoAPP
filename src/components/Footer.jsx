@@ -11,27 +11,27 @@ export function Footer() {
           <div>
             <div className="footer-col-title">MOTO.TALLER LAB</div>
             <ul className="footer-links">
-              <li><a href="#">Servicios</a></li>
+              <li><a href="#servicios">Servicios</a></li>
               <li><a href="#taller">El Taller</a></li>
               <li><a href="#contacto">Contacto</a></li>
-              <li><a href="#">Blog Técnico</a></li>
+              <li><a href="/blog">Blog Tecnico</a></li>
             </ul>
           </div>
           <div>
             <div className="footer-col-title">LEGAL</div>
             <ul className="footer-links">
-              <li><a href="#">Términos y Condiciones</a></li>
-              <li><a href="#">Política de Privacidad</a></li>
-              <li><a href="#">Garantía de Servicio</a></li>
+              <li><a href="/terminos">Terminos y condiciones</a></li>
+              <li><a href="/privacidad">Politica de privacidad</a></li>
+              <li><a href="/garantia">Garantia de servicio</a></li>
             </ul>
           </div>
           <div>
             <div className="footer-col-title">REDES</div>
             <div className="footer-social">
-              <a href="#" className="social-btn" aria-label="Instagram"><FaInstagram size={18} /></a>
-              <a href="#" className="social-btn" aria-label="Facebook"><FaFacebookF size={18} /></a>
-              <a href="#" className="social-btn" aria-label="YouTube"><FaYoutube size={18} /></a>
-              <a href="#" className="social-btn" aria-label="TikTok"><FaTiktok size={18} /></a>
+              <a href="https://www.instagram.com" className="social-btn" aria-label="Instagram"><FaInstagram size={18} /></a>
+              <a href="https://www.facebook.com" className="social-btn" aria-label="Facebook"><FaFacebookF size={18} /></a>
+              <a href="https://www.youtube.com" className="social-btn" aria-label="YouTube"><FaYoutube size={18} /></a>
+              <a href="https://www.tiktok.com" className="social-btn" aria-label="TikTok"><FaTiktok size={18} /></a>
             </div>
           </div>
           <div>
@@ -44,7 +44,7 @@ export function Footer() {
                 className="newsletter-input"
                 placeholder="tu@email.com"
                 value={email}
-                onInput={e => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
               />
               <button className="newsletter-btn">→</button>
             </div>

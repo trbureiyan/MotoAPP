@@ -88,8 +88,17 @@ function FlipCard({ service }) {
     <div 
       className="flip-card" 
       onClick={handleFlip}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleFlip();
+        }
+      }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      role="button"
+      tabIndex={0}
+      aria-pressed={flipped}
       ref={cardRef}
     >
       <div className="flip-card-inner" ref={innerRef}>

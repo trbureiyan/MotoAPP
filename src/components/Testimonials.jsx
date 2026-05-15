@@ -102,10 +102,16 @@ export function Testimonials() {
           style={{ overflow: 'visible', display: 'flex', flexWrap: 'nowrap', width: 'max-content' }}
         >
           {loading ? (
-            <div style={{ textAlign: 'center', width: '100%', padding: '2rem 0' }} uk-spinner="ratio: 1.5"></div>
+            <div
+              style={{ textAlign: 'center', width: '100%', padding: '2rem 0' }}
+              data-uk-spinner="ratio: 1.5"
+              role="status"
+              aria-live="polite"
+              aria-busy="true"
+            ></div>
           ) : (
-            testimonials.map((t, i) => (
-              <div key={i} className="carousel-item">
+            testimonials.map((t) => (
+              <div key={`${t.name}-${t.bike}`} className="carousel-item">
                 <div className="bento-card">
                   <p className="bento-quote">"{t.quote}"</p>
                   <div className="bento-rider">

@@ -36,9 +36,9 @@ function GalleryGrid({
     <div
       className={`gallery-${variant}${animated ? " reveal-stagger" : ""}${className ? ` ${className}` : ""}`}
     >
-      {items.map((item, i) => (
+      {items.map((item) => (
         <button
-          key={`${item.id}-${i}`}
+          key={item.id}
           className="gallery-item"
           onClick={() => onSelect(item)}
         >
@@ -84,10 +84,23 @@ export function Gallery({ onViewMore }) {
         </div>
       </div>
       {lightbox && (
-        <div className="lightbox-overlay" onClick={() => setLightbox(null)}>
+        <div
+          className="lightbox-overlay"
+          role="button"
+          tabIndex={0}
+          aria-label="Cerrar imagen"
+          onClick={() => setLightbox(null)}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setLightbox(null);
+            }
+          }}
+        >
           <div
             className="lightbox-content"
             onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
           >
             <button
               className="lightbox-close"
@@ -232,6 +245,15 @@ export function GalleryPage({ onBack }) {
               key={item.id}
               className="hs-item"
               onClick={(e) => openItem(item, e)}
+              role="button"
+              tabIndex={0}
+              aria-label={`Abrir detalle de ${item.label}`}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  openItem(item, e);
+                }
+              }}
             >
               <div className="hs-item-inner">
                 <div className="hs-item-img-wrap">
@@ -258,7 +280,19 @@ export function GalleryPage({ onBack }) {
       </div>
 
       {activeItem && (
-        <div className="lightbox-fs" onClick={closeItem}>
+        <div
+          className="lightbox-fs"
+          onClick={closeItem}
+          role="button"
+          tabIndex={0}
+          aria-label="Cerrar vista completa"
+          onKeyDown={(e) => {
+            if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              closeItem();
+            }
+          }}
+        >
           <button className="lightbox-fs-close" onClick={closeItem}>
             ×
           </button>
@@ -266,6 +300,7 @@ export function GalleryPage({ onBack }) {
           <div
             className="lightbox-fs-img-container"
             onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
           >
             {/* The element we flip TO */}
             <div

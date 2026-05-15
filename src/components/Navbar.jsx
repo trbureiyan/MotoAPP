@@ -4,10 +4,21 @@ export function Navbar({ onBooking }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
+  const handleLogoClick = () => {
+    closeMobileMenu();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <nav className="nav-root">
-      <a className="nav-logo" href="#" onClick={closeMobileMenu}>MOTO.Taller</a>
+      <button
+        className="nav-logo"
+        type="button"
+        onClick={handleLogoClick}
+        aria-label="Ir al inicio"
+      >
+        MOTO.Taller
+      </button>
 
       <ul className="nav-links">
         <li><a href="#servicios">Servicios</a></li>

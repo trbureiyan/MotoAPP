@@ -62,8 +62,29 @@ export function BookingModal({ onClose }) {
   const [done, setDone] = useState(false);
 
   return (
-    <div className="modal-overlay" onClick={onClose} ref={modalRef}>
-      <div className="modal-box" onClick={e => e.stopPropagation()}>
+    <div
+      className="modal-overlay"
+      onClick={onClose}
+      onKeyDown={(e) => {
+        if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClose();
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label="Cerrar modal"
+      ref={modalRef}
+    >
+      <div
+        className="modal-box"
+        onClick={e => e.stopPropagation()}
+        onKeyDown={e => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Reserva de cita"
+        tabIndex={-1}
+      >
         <button className="modal-close" onClick={onClose}><IconX /></button>
 
         {done ? (
@@ -78,8 +99,8 @@ export function BookingModal({ onClose }) {
         ) : (
           <>
             <div className="modal-stepper">
-              {steps.map((_, i) => (
-                <div key={i} className={`modal-step-dot${i <= step ? ' active' : ''}`} />
+              {steps.map((stepItem, i) => (
+                <div key={stepItem.label} className={`modal-step-dot${i <= step ? ' active' : ''}`} />
               ))}
             </div>
             <div className="modal-step-label">{steps[step].label} / {steps.length}</div>
@@ -89,7 +110,13 @@ export function BookingModal({ onClose }) {
             {step === 0 && (
               <div className="brand-grid">
                 {loadingBrands ? (
-                  <div style={{ textAlign: 'center', gridColumn: '1 / -1', padding: '2rem 0' }} uk-spinner="ratio: 1.5"></div>
+                  <div
+                    style={{ textAlign: 'center', gridColumn: '1 / -1', padding: '2rem 0' }}
+                    data-uk-spinner="ratio: 1.5"
+                    role="status"
+                    aria-live="polite"
+                    aria-busy="true"
+                  ></div>
                 ) : (
                   brands.map(b => (
                     <button
@@ -121,13 +148,13 @@ export function BookingModal({ onClose }) {
                   className="modal-input"
                   placeholder="Modelo y cilindraje (ej: BMW S1000RR 2022)"
                   value={data.modelo}
-                  onInput={e => update('modelo', e.target.value)}
+                  onChange={e => update('modelo', e.target.value)}
                 />
                 <input
                   className="modal-input"
                   type="date"
                   value={data.fecha}
-                  onInput={e => update('fecha', e.target.value)}
+                  onChange={e => update('fecha', e.target.value)}
                   style={{ colorScheme: 'dark' }}
                 />
               </div>
@@ -139,13 +166,13 @@ export function BookingModal({ onClose }) {
                   className="modal-input"
                   placeholder="Nombre completo"
                   value={data.nombre}
-                  onInput={e => update('nombre', e.target.value)}
+                  onChange={e => update('nombre', e.target.value)}
                 />
                 <input
                   className="modal-input"
                   placeholder="Teléfono o WhatsApp"
                   value={data.telefono}
-                  onInput={e => update('telefono', e.target.value)}
+                  onChange={e => update('telefono', e.target.value)}
                 />
               </div>
             )}
