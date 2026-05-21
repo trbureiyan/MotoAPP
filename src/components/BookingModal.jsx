@@ -169,6 +169,9 @@ export function BookingModal({ onClose }) {
                   min={today}
                   value={data.fecha}
                   onChange={e => update('fecha', e.target.value)}
+                  onKeyDown={e => e.preventDefault()}
+                  onPaste={e => e.preventDefault()}
+                  onDrop={e => e.preventDefault()}
                   style={{ colorScheme: 'dark' }}
                 />
               </div>
