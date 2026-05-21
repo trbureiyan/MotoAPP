@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { animateMetricValue, animateTestimonialsSection } from '../animations/testimonialsAnimations';
 
@@ -37,7 +38,6 @@ const STATIC_TESTIMONIALS = [
 export function Testimonials() {
   const sectionRef = useRef(null);
   const carouselRef = useRef(null);
-  const dragState = useRef({ isDown: false, startX: 0, scrollLeft: 0 });
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -140,7 +140,7 @@ function MetricsRow() {
   const [f1Races, setF1Races] = useState(500);
 
   useEffect(() => {
-    fetch('http://ergast.com/api/f1/current.json')
+    fetch('https://ergast.com/api/f1/current.json')
       .then(res => res.json())
       .then(data => {
         const total = data.MRData.total || data.MRData.RaceTable.Races.length;

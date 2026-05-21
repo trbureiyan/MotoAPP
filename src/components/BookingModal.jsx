@@ -42,7 +42,15 @@ export function BookingModal({ onClose }) {
       .finally(() => setLoadingBrands(false));
   }, []);
 
-  const update = (key, val) => setData(d => ({ ...d, [key]: val }));
+  const update = (key, val) => {
+    let sanitizedVal = val;
+    if (key === 'nombre') {
+      sanitizedVal = val.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+    } else if (key === 'telefono') {
+      sanitizedVal = val.replace(/\D/g, '').slice(0, 10);
+    }
+    setData(d => ({ ...d, [key]: sanitizedVal }));
+  };
 
   const steps = [
     { label: 'PASO 01', title: 'SELECCIONA LA MARCA', sub: 'Elige la marca de tu moto' },
@@ -54,12 +62,15 @@ export function BookingModal({ onClose }) {
   const canNext = () => {
     if (step === 0) return !!data.brand;
     if (step === 1) return !!data.motivo;
-    if (step === 2) return !!data.fecha && !!data.modelo;
-    if (step === 3) return !!data.nombre && !!data.telefono;
+    if (step === 2) return data.fecha && data.modelo.trim().length > 2;
+    if (step === 3) {
+      return data.nombre.trim().length > 2 && data.telefono.length === 10;
+    }
     return false;
   };
 
   const [done, setDone] = useState(false);
+  const today = new Date().toISOString().split('T')[0];
 
   return (
     <div
@@ -121,6 +132,7 @@ export function BookingModal({ onClose }) {
                   brands.map(b => (
                     <button
                       key={b}
+                      type="button"
                       className={`brand-btn${data.brand === b ? ' selected' : ''}`}
                       onClick={() => update('brand', b)}
                     >{b}</button>
@@ -134,6 +146,7 @@ export function BookingModal({ onClose }) {
                 {MOTIVOS.map(m => (
                   <button
                     key={m}
+                    type="button"
                     className={`brand-btn${data.motivo === m ? ' selected' : ''}`}
                     style={{ textAlign: 'left', padding: '0.85rem 1rem' }}
                     onClick={() => update('motivo', m)}
@@ -153,6 +166,7 @@ export function BookingModal({ onClose }) {
                 <input
                   className="modal-input"
                   type="date"
+                  min={today}
                   value={data.fecha}
                   onChange={e => update('fecha', e.target.value)}
                   style={{ colorScheme: 'dark' }}
@@ -170,8 +184,9 @@ export function BookingModal({ onClose }) {
                 />
                 <input
                   className="modal-input"
-                  placeholder="Teléfono o WhatsApp"
+                  placeholder="Teléfono o WhatsApp (10 dígitos)"
                   value={data.telefono}
+                  maxLength={10}
                   onChange={e => update('telefono', e.target.value)}
                 />
               </div>
