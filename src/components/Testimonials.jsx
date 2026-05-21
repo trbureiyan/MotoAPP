@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { animateMetricValue, animateTestimonialsSection } from '../animations/testimonialsAnimations';
 
@@ -37,32 +36,12 @@ const STATIC_TESTIMONIALS = [
 
 export function Testimonials() {
   const sectionRef = useRef(null);
-  const carouselRef = useRef(null);
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useGSAP(() => {
     if (loading || testimonials.length === 0) return;
     animateTestimonialsSection(sectionRef.current);
-
-    const wrap = carouselRef.current;
-    if (wrap) {
-      const scrollDist = wrap.scrollWidth - window.innerWidth;
-      if (scrollDist > 0) {
-        gsap.to(wrap, {
-          x: () => -scrollDist,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'center center',
-            end: () => `+=${scrollDist}`,
-            scrub: true,
-            pin: true,
-            anticipatePin: 1
-          }
-        });
-      }
-    }
   }, { scope: sectionRef, dependencies: [loading, testimonials.length] });
 
   useEffect(() => {
@@ -96,11 +75,7 @@ export function Testimonials() {
         <div className="section-label testimonials-kicker">Opiniones reales de clientes</div>
         <h2 className="section-title testimonials-title"><em>TESTIMONIOS DEL PADDOCK</em></h2>
         <div className="divider-line testimonials-divider" />
-        <div
-          className="carousel-container pin-wrap"
-          ref={carouselRef}
-          style={{ overflow: 'visible', display: 'flex', flexWrap: 'nowrap', width: 'max-content' }}
-        >
+        <div className="carousel-container">
           {loading ? (
             <div
               style={{ textAlign: 'center', width: '100%', padding: '2rem 0' }}

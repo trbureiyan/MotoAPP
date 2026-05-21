@@ -192,15 +192,21 @@ export const contentStyles = (T) => `
       overflow-x: auto;
       overflow-y: hidden;
       scroll-snap-type: x mandatory;
-      scrollbar-width: none; /* Firefox */
+      scrollbar-width: thin;
+      scrollbar-color: ${T.orange} rgba(255,255,255,0.08);
       display: flex;
       gap: 1.5rem;
-      padding: 1rem 0 3rem;
+      padding: 1rem 0 1.25rem;
       scroll-behavior: smooth;
       cursor: grab;
       position: relative;
     }
-    .carousel-container::-webkit-scrollbar { display: none; }
+    .carousel-container::-webkit-scrollbar { height: 4px; }
+    .carousel-container::-webkit-scrollbar-track { background: rgba(255,255,255,0.08); }
+    .carousel-container::-webkit-scrollbar-thumb {
+      background: ${T.orange};
+      border-radius: 999px;
+    }
     .carousel-container:active { cursor: grabbing; }
 
     .carousel-indicators {
