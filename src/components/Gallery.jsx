@@ -11,18 +11,18 @@ import { GradualBlur } from "./GradualBlur";
 gsap.registerPlugin(ScrollTrigger, Flip);
 
 const GALLERY_ITEMS = [
-  { id: 'g1', src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80', label: 'BMW S1000RR - Tuning ECU', stats: 'HP: 205 | TRQ: 83ft-lb' },
-  { id: 'g2', src: 'https://images.unsplash.com/photo-1609630875171-b1321377ee65?w=900&q=80', label: 'Yamaha R1 - Suspensión', stats: 'SAG: 35mm | REB: 12 clicks' },
-  { id: 'g3', src: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=900&q=80', label: 'Kawasaki ZX-10R - Frenos Brembo', stats: 'ROTOR: 330mm | FLUID: DOT 5.1' },
-  { id: 'g4', src: 'https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?w=900&q=80', label: 'Ducati V4 - Mapeo Dyno', stats: 'MAP: Race Evo | A/F: 13.2' },
-  { id: 'g5', src: 'https://www.motofichas.com/images/cache/10-honda-cb1000-hornet-sp-2025-estudio-negro-01-739-a.jpg', label: 'Honda CBR - Mantenimiento', stats: 'OIL: Motul 300V | FLTR: K&N' },
-  { id: 'g6', src: 'https://images.unsplash.com/photo-1558981359-219d6364c9c8?w=900&q=80', label: 'Suzuki GSX-R - Full Service', stats: 'CH: DID 520 | SPRK: 16/45' },
-  { id: 'g7', src: 'https://www.moto.ch/wp-content/uploads/2024/12/Honda-CB1000-Hornet_01-1300x867.jpg', label: 'Honda CB1000 Hornet SP', stats: 'SYS: HESD | TRQ: 104Nm' },
-  { id: 'g8', src: 'https://images.unsplash.com/photo-1542362567-b07e54358753?w=900&q=80', label: 'Aprilia RSV4 - Puesta a punto', stats: 'MAP: Track | APRC: Active' },
-  { id: 'g9', src: 'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=900&q=80', label: 'Ducati Panigale - Detalle final', stats: 'AERO: Winglets | DESMO: OK' },
-  { id: 'g10', src: 'https://images.unsplash.com/photo-1517846693594-1567da72af75?w=900&q=80', label: 'Triumph Street Triple - Revisión general', stats: 'QUICK: Up/Down | TFT: 5in' },
-  { id: 'g11', src: 'https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?w=900&q=80', label: 'KTM Duke - Diagnóstico ECU', stats: 'MTC: Spin Adjust | ABS: Supermoto' },
-  { id: 'g12', src: 'https://images.unsplash.com/photo-1615172282427-9a57ef2d142e?w=900&q=80', label: 'BMW R nineT - Servicio premium', stats: 'SHAFT: Lube | BOXER: Sync' },
+  { id: 'g1', src: 'https://images.pexels.com/photos/17243626/pexels-photo-17243626.jpeg?auto=compress&cs=tinysrgb&w=1000', label: 'BMW S1000RR 2024 - Tuning ECU', stats: 'HP: 205 | TRQ: 83ft-lb' },
+  { id: 'g2', src: 'https://images.pexels.com/photos/8532387/pexels-photo-8532387.png?auto=compress&cs=tinysrgb&w=1000', label: 'Yamaha R1 - Suspensión', stats: 'SAG: 35mm | REB: 12 clicks' },
+  { id: 'g3', src: 'https://images.pexels.com/photos/30180721/pexels-photo-30180721.jpeg?auto=compress&cs=tinysrgb&w=1000', label: 'Kawasaki ZX-10R - Frenos Brembo', stats: 'ROTOR: 330mm | FLUID: DOT 5.1' },
+  { id: 'g4', src: 'https://images.unsplash.com/photo-1615172282427-9a57ef2d142e?w=1000&q=70&auto=format&fit=crop', label: 'Ducati Panigale V4 - Mapeo Dyno', stats: 'MAP: Race Evo | A/F: 13.2' },
+  { id: 'g5', src: 'https://images.pexels.com/photos/33203558/pexels-photo-33203558.jpeg?auto=compress&cs=tinysrgb&w=1000', label: 'Honda CBR 1000RR-R - Mantenimiento', stats: 'OIL: Motul 300V | FLTR: K&N' },
+  { id: 'g6', src: 'https://images.pexels.com/photos/17900720/pexels-photo-17900720.jpeg?auto=compress&cs=tinysrgb&w=1000', label: 'Suzuki GSX-R 1000 - Full Service', stats: 'CH: DID 520 | SPRK: 16/45' },
+  { id: 'g7', src: 'https://www.moto.ch/wp-content/uploads/2024/12/Honda-CB1000-Hornet_01-1300x867.jpg', label: 'Honda CB1000 Hornet SP 2024', stats: 'SYS: HESD | TRQ: 104Nm' },
+  { id: 'g8', src: 'https://images.pexels.com/photos/11605405/pexels-photo-11605405.jpeg?auto=compress&cs=tinysrgb&w=1000', label: 'Aprilia RSV4 - Puesta a punto', stats: 'MAP: Track | APRC: Active' },
+  { id: 'g9', src: 'https://images.pexels.com/photos/27184237/pexels-photo-27184237.jpeg?auto=compress&cs=tinysrgb&w=1000', label: 'Ducati Multistrada v4 - Detalle final', stats: 'AERO: Winglets | DESMO: OK' },
+  { id: 'g10', src: 'https://images.pexels.com/photos/33522279/pexels-photo-33522279.jpeg?auto=compress&cs=tinysrgb&w=1000', label: 'Triumph Street Triple - Revisión general', stats: 'QUICK: Up/Down | TFT: 5in' },
+  { id: 'g11', src: 'https://images.unsplash.com/photo-1656767112164-f9f59766357d?q=70&w=1000&auto=format&fit=crop', label: 'KTM 1290 Super Duke - Diagnóstico ECU', stats: 'MTC: Spin Adjust | ABS: Supermoto' },
+  { id: 'g12', src: 'https://images.pexels.com/photos/9064725/pexels-photo-9064725.jpeg?auto=compress&cs=tinysrgb&w=1000', label: 'BMW R nineT - Servicio premium', stats: 'SHAFT: Lube | BOXER: Sync' },
 ];
 
 function GalleryGrid({
@@ -227,9 +227,6 @@ export function GalleryPage({ onBack }) {
       </div>
 
       <div className="hs-ui-layer">
-        <button className="btn-outline gallery-back-btn" onClick={onBack}>
-          VOLVER AL INICIO
-        </button>
         <div className="hs-header">
           <div className="section-label">Archivo completo del taller</div>
         </div>
@@ -261,6 +258,8 @@ export function GalleryPage({ onBack }) {
                     src={item.src}
                     alt={item.label}
                     className="hs-item-img"
+                    loading="lazy"
+                    decoding="async"
                     data-flip-id={`img-${item.id}`}
                   />
                   <div className="hs-item-overlay">

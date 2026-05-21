@@ -76,7 +76,11 @@ export function App() {
       <Preloader />
       <SoftCursor />
       <Styles />
-      <Navbar onBooking={() => setShowModal(true)} />
+      <Navbar 
+        onBooking={() => setShowModal(true)} 
+        isGallery={activeView === 'gallery'} 
+        onBack={showHome} 
+      />
       {activeView === 'gallery' ? (
         <GalleryPage onBack={showHome} />
       ) : (
