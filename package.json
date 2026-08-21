@@ -1,0 +1,11 @@
+{
+  "name": "motoweb",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.1.0",
+  "scripts": {
+    "dev:frontend": "pnpm --filter moto.taller dev",
+    "dev:backend": "pnpm --filter backend dev",
+    "dev": "pnpm -r --parallel dev"
+  }
+}
